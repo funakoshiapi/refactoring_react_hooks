@@ -5,9 +5,9 @@ function Select({handleSelectChange, optionsForSelect, defaultLabel, id}){
 
     return(
         <>
-            <label htmlFor="select-product"> {`${defaultLabel}`}</label>  
+            <label htmlFor={id}> {defaultLabel}</label>  
             <div className="field">
-                <select id="select-product" onChange={ e => handleSelectChange(e)}>
+                <select id= {id} onChange={ e => handleSelectChange(e)}>
                     <option value="">--</option>
                     {optionsForSelect.map(option =>(
                         <option key={option.label} value={option.value}>
@@ -29,6 +29,18 @@ function Select({handleSelectChange, optionsForSelect, defaultLabel, id}){
         
     )
 }
+
+Select.propTypes = {
+
+    handleSelectChange : PropTypes.func.isRequired,
+    optionsForSelect: PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired
+    })).isRequired(),
+    id: PropTypes.string.isRequired,
+    defaultLabel: PropTypes.string.isRequired
+
+};
 
 
 export default Select
