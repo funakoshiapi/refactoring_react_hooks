@@ -1,44 +1,46 @@
-import React, {useState} from "react";
-import Select from "./Select";
-import FetchData from "./FetchData";
+import React, { useState } from "react";
+import Select from "../../common/components/Select";
+import DataFetching from "./DataFetching";
 
+if (process.env.NODE_ENV === "development") {
+  const { Server } = require("miragejs");
+  const { sales, subscriptions } = require("../../mocks");
 
-const DataFetchingContainer = () => {
-    
-      const [selected, setSelected] = useState(undefined); 
-      const [endpoint, setEndPoint] = useState(undefined); 
-
-      const optionsForSelect =  [
-        { label: "Sales", value: `${process.env.REACT_APP_BASE_URL}/sales/` },
-        {
-          label: "Subscriptions",
-          value: `${process.env.REACT_APP_BASE_URL}/subscriptions/`
-        }
-      ];
-      
-      function handleSelectChange(event){
-        const selectedLabel = event.target.selectedOptions[0].label;
-        const selectedEndpoint = event.target.selectedOptions[0].value;
-        setEndPoint(selectedEndpoint);
-        setSelected(selectedLabel);
-      }
-      
-      return(
-          <>
-            <Select 
-                optionsForSelect = {optionsForSelect}
-                defaultLabel = "Please, select a chart"
-                id = "select-chart"
-                handleSelectChange={handleSelectChange} 
-            />
-            <FetchData
-                endpoint={endpoint}
-            />
-          </>
-      )
-
+  new Server({
+    routes() {
+      this.namespace = process.env.REACT_APP_BASE_URL;
+      this.get("sales/", () => sales);
+      this.get("subscriptions/", () => subscriptions);
+    }
+  });
 }
 
+const DataFetchingContainer = () => {
+  const [selectedEndpoint, setSelectedEndpoint] = useState("");
 
+  const optionsForSelect = [
+    { label: "Sales", value: `${process.env.REACT_APP_BASE_URL}/sales/` },
+    {
+      label: "Subscriptions",
+      value: `${process.env.REACT_APP_BASE_URL}/subscriptions/`
+    }
+  ];
 
-export default DataFetchingContainer
+  function handleSelectChange(event) {
+    setSelectedEndpoint(event.target.value);
+  }
+
+  return (
+    <>
+      <Select
+        handleChange={handleSelectChange}
+        label="Please, select a chart"
+        id="select-chart"
+        options={optionsForSelect}
+      />
+      {selectedEndpoint ? <DataFetching endpoint={selectedEndpoint} /> : null}
+    </>
+  );
+};
+
+export default DataFetchingContainer;

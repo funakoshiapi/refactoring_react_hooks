@@ -4,12 +4,12 @@ export let sales;
 export let subscriptions;
 
 if (process.env.NODE_ENV === "development") {
-  debugger
+  
   /* ONLY FOR DEVELOPMENT! DON'T IMPORT IN PRODUCTION */
   const Series = require("time-series-data-generator");
 
-  const from = "2020-01-01T16:30:41Z";
-  const until = "2020-05-01T18:30:00Z";
+  const from = "2022-01-01T16:30:41Z";
+  const until = "2022-05-01T18:30:00Z";
   const interval = 43200;
   const keyName = "amount";
 
@@ -28,18 +28,4 @@ if (process.env.NODE_ENV === "development") {
   });
 
 
-
-  new Server({
-    routes() {
-      this.namespace = REACT_APP_BASE_URL;
-  
-      this.get("/Sales/", () => {
-        return salesSeries;
-      });
-
-      this.get("/Subscriptions/", () => {
-        return subscriptionsSeries;
-      });
-    }
-  });
 }
