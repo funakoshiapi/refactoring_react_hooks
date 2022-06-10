@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import Loading from "./Loading";
+import useFetch from "../../hooks/useFetch";
 
 const DataFetching = ({ endpoint }) => {
-  const [data, setData] = useState([]);
+  
+  const {loading, error, data} = useFetch(endpoint);
 
-  useEffect(() => {
-    fetch(endpoint)
-      .then(response => response.json())
-      .then(json => setData(json));
-  }, [endpoint]);
-
-  debugger
+  
   return (
-    <ul>
+
+      <ul>
       {data.map(element => (
         <li key={element.timestamp}>
           {element.timestamp} - {element.amount}
         </li>
       ))}
     </ul>
+    
+
   );
 };
 

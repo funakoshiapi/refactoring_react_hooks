@@ -26,39 +26,38 @@ function apiReducer(state, action)
             return {...state, loading: false, error: "", data: action.payload};
         case "FETCH_DATASET_FINISH":
             return {...state, loading: false};
+        case "EMPTY_OR_NULL":
+            return {...state, loading: false, error:"", data: []};
         default:
             return state;
     }
 }
 
+export function useFetch(endpoint) {
+    const [state, dispatch] = useReducer(apiReducer, initialState);
+  
+    useEffect(() => {
+  
+      // Don't call the API if endpoint is null or empty
+      if (!endpoint) 
+          return dispatch({type: "EMPTY_OR_NULL"});
+  
+      dispatch({ type: "FETCH_DATASET_START" });
+      fetch(endpoint)
+        .then(response => {
+          if (!response.ok) throw Error(response.statusText);
+          return response.json();
+        })
+        .then(json => {
+          dispatch({ type: "FETCH_DATASET_SUCCESS", payload: json });
+        })
+        .catch(error => {
+          dispatch({ type: "FETCH_DATASET_ERROR", payload: error.message });
+        })
+        .finally(() => {
+          dispatch({ type: "FETCH_DATASET_FINISH" });
+        });
+    }, [endpoint]);
 
-function useEffect(endpoint){
-
-    const[loading, setLoading] = useState("no");
-    const[error, setError] = useState("");
-    const [data, setData] = useState([]);
-
-    useEffect(() =>{
-        setLoading("yes");
-
-        fetch(endpoint)
-            .then(response =>{
-                if (!response.ok) throw Error(response.statusText);
-                return response.json();
-            })
-            .then(json => setData(json))
-            .catch(error => {
-                
-                setError(error.message);
-            })
-            .finally(() =>{
-                setLoading("no");
-            })
-    },[endpoint]);
-
-    return {loading, error, data};
-
+    return state;
 }
-
-export default useEffect;
-

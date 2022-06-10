@@ -2,6 +2,7 @@
 import {Server} from "miragejs";
 export let sales;
 export let subscriptions;
+export let totals;
 
 if (process.env.NODE_ENV === "development") {
   
@@ -27,5 +28,6 @@ if (process.env.NODE_ENV === "development") {
     decimalDigits: 0
   });
 
+  totals = 555;
 
 }

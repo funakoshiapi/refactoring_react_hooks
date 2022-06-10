@@ -1,28 +1,23 @@
 import React, {useState} from "react";
 import DashboardShell from "./features/Dashboard/DashboardShell";
-import DataFetchingContainer from "./common/components/DataFetchingContainer";
-import {sales} from "./mocks";
+import {useFetch} from "./hooks/useFetch"; 
+
+
 
 export const globalContext = React.createContext();
-
 const {Provider} = globalContext;
 
 const App = () => {
 
-  const initialState = {
-    loading: false,
-    error:"",
-    salesTotal: 3466,
-    subscriptionTotal: 1492,
-    data: sales
-  }
-  return(
-    
-      <Provider value={initialState}>
-        <DataFetchingContainer/>
-      </Provider>
-    
+  const [endpoint, setEndPoint] = useState("");
+  const value = useFetch(endpoint);
 
+  debugger
+
+  return(   
+      <Provider value={value}>
+        <DashboardShell fetchDataset={setEndPoint}/>
+      </Provider>
   ) 
 };
 
