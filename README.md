@@ -14,7 +14,7 @@
  -PropTypes for components
  
  
- 
+ ![https://github.com/funakoshiapi/refactoring_react_hooks/blob/main/dashboard.PNG]
  
  
  
