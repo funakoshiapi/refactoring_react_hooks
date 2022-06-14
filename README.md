@@ -6,8 +6,11 @@
  -Used miragejs for mock data
  
  -Used Cypress for testing end to end testing
+ 
  -Used Jets for unit testing
+ 
  -Used react-chartjs-2
+ 
  -PropTypes for components
  
  
