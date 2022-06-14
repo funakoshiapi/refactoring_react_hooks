@@ -13,7 +13,7 @@
  
  -PropTypes for components
  
- # Application Dashboard
+ #Dashboard
  ![](https://github.com/funakoshiapi/refactoring_react_hooks/blob/main/dashboard.PNG)
  
  
