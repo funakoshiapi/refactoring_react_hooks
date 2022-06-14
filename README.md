@@ -14,6 +14,8 @@
  -PropTypes for components
  
  # Dashboard
+ ![](https://github.com/funakoshiapi/refactoring_react_hooks/blob/main/selection.png)
+ ![](https://github.com/funakoshiapi/refactoring_react_hooks/blob/main/sales.png)
  ![](https://github.com/funakoshiapi/refactoring_react_hooks/blob/main/dashboard.PNG)
  
  
